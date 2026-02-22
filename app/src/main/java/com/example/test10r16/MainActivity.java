@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         display = findViewById(R.id.display);
     }
 
+
     public void operatorClick(View view) {
 
         double currentNumber = Double.parseDouble(display.getText().toString());
