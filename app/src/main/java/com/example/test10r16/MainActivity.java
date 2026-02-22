@@ -1,5 +1,7 @@
 package com.example.test10r16;
 
+
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
     EditText display;
 
     double memory = 0;
-    String x = "";
-    boolean newNumber = true;
+    String operator = "";
+    boolean isNewNumber = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void operatorClick(View view) {
 
-        Button button = (Button) view;
         double currentNumber = Double.parseDouble(display.getText().toString());
 
-        if (!x.equals("")) {
-            calculate(currentNumber);
-        } else {
+        if (operator.equals("")) {
             memory = currentNumber;
+        } else {
+            calculate(currentNumber);
         }
 
-        x = button.getText().toString();
-        newNumber = true;
+        operator = ((Button)view).getText().toString();
+        isNewNumber = true;   // говорим что следующее число новое
     }
 
     public void equalsClick(View view) {
@@ -43,37 +44,47 @@ public class MainActivity extends AppCompatActivity {
         double currentNumber = Double.parseDouble(display.getText().toString());
         calculate(currentNumber);
 
-        x = "";
-        newNumber = true;
+        operator = "";
+        isNewNumber = true;
     }
 
     private void calculate(double currentNumber) {
 
-        switch (x) {
+        switch (operator) {
             case "+":
-                memory = memory + currentNumber;
+                memory += currentNumber;
                 break;
-
             case "-":
-                memory = memory - currentNumber;
+                memory -= currentNumber;
                 break;
-
             case "*":
-                memory = memory * currentNumber;
+                memory *= currentNumber;
                 break;
-
             case "/":
-                memory = memory / currentNumber;
+                memory /= currentNumber;
                 break;
         }
 
         display.setText(String.valueOf(memory));
     }
 
+    // ЭТО ГЛАВНОЕ — очищаем поле при новом числе
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        display.setOnClickListener(v -> {
+            if (isNewNumber) {
+                display.setText("");
+                isNewNumber = false;
+            }
+        });
+    }
+
     public void clearClick(View view) {
         display.setText("");
         memory = 0;
-        x = "";
-        newNumber = true;
+        operator = "";
+        isNewNumber = true;
     }
 }
