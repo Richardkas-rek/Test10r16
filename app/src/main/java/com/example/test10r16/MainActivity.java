@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         operator = ((Button)view).getText().toString();
-        isNewNumber = true;   // говорим что следующее число новое
+        isNewNumber = true;
     }
 
     public void equalsClick(View view) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         display.setText(String.valueOf(memory));
     }
 
-    // ЭТО ГЛАВНОЕ — очищаем поле при новом числе
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
